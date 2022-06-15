@@ -9,10 +9,8 @@ import 'package:instagram_clone_flutter/responsive/web_screen_layout.dart';
 import 'package:instagram_clone_flutter/screens/login_screen.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
 import 'package:provider/provider.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   // initialise app based on platform- web or mobile
   if (kIsWeb) {
     await Firebase.initializeApp(
@@ -29,10 +27,8 @@ void main() async {
   }
   runApp(const MyApp());
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -62,3 +58,16 @@ class MyApp extends StatelessWidget {
                 );
               }
             }
+            // means connection to future hasnt been made yet
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return const LoginScreen();
+          },
+        ),
+      ),
+    );
+  }
+}
